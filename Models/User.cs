@@ -1,3 +1,4 @@
+//NOTE DO NOT TOUCH THIS CODE!!!!
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
