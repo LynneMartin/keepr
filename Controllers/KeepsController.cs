@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using keepr.Models;
 
+
 namespace keepr.Controllers
 {
   //used Petshop project for reference examples
@@ -10,7 +11,8 @@ namespace keepr.Controllers
   [ApiController]
   public class KeepsController : ControllerBase
   {
-    private readonly KeepsRepository _repository;
+    private readonly KeepsRepository repository; //NOTE removed squigglies under 'repository' on line 19.
+
     public KeepsController(KeepsRepository _repository)
     {
       _repository = repository;
@@ -19,7 +21,7 @@ namespace keepr.Controllers
     //used Petshop and BurgerShack for reference examples
     //STUB would GET ALL KEEPS even be needed? Return to this.
     [HttpGet]
-    public ActionResult<IEnumerable<KeepsController>> Get()
+    public ActionResult<IEnumerable<Keeps>> Get()
     {
       try
       {
@@ -33,7 +35,7 @@ namespace keepr.Controllers
     }
       //NOTE GET KEEPS BY ID
       [HttpGet("{id}")]
-      public ActionResult<string> Get(int id)
+      public ActionResult<Keeps> Get(int id)
       {
         try
         {
@@ -51,6 +53,7 @@ namespace keepr.Controllers
     {
       try
       {
+        // var keeps = _repository.CreateKeeps(keeps);
         return Ok(_repository.CreateKeeps(keeps));
       }
       catch (Exception e)

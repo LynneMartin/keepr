@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using keepr.Models;
+using keepr.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System; //yay! removed Exception squigglies
 
 namespace keepr.Controllers
 //NOTE Used KeepsController for reference
@@ -8,7 +11,7 @@ namespace keepr.Controllers
   [ApiController]
   public class VaultController : ControllerBase
   {
-    private readonly VaultRepository _repository;
+    private readonly VaultRepository repository;
     public VaultController(VaultRepository _repository)
     {
       _repository = repository;
@@ -59,7 +62,7 @@ namespace keepr.Controllers
 
     //NOTE DELETE VAULT
     [HttpDelete("{id")]
-    public ActionResult<string> Delete(int id)
+    public ActionResult<Vault> Delete(int id)
     {
       try
       {
