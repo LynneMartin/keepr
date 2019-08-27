@@ -41,7 +41,7 @@ namespace keepr.Controllers
         return keeps;
       }
     //SECTION GET KEEPS BY *USER* ID
-    public IEnumerable GetKeepsByUserId(string UserId) //REVIEW string or int?
+    public IEnumerable GetKeepsByUserId(string UserId) //string, matching Keeps.cs
     {
       return _db.Query<Keeps>("SELECT * FROM keeps WHERE UserId = @UserId, new {UserId}");
     }

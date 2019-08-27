@@ -38,7 +38,7 @@ namespace keepr.Controllers
     //NOTE GET KEEPS BY *USER* ID
     //NOTE GetKeepsByUserId method created in KeepsRepo
     [HttpGet("{userId}")]
-    public IEnumerable<Keeps> GetKeepsByUserId(string userId) //REVIEW IEnumerable or ActionResult??? string or int?
+    public ActionResult<IEnumerable<Keeps>> GetKeepsByUserId(string userId) //REVIEW Adding IEnumerable to ActionResult removed "an explicit conversion exists" error
     {
         try
         {
@@ -52,8 +52,8 @@ namespace keepr.Controllers
       }
   
 
-  //NOTE GET A KEEP BY KEEP ID
-  [HttpGet("{id}")] //keep id
+      //NOTE GET A KEEP BY KEEP ID
+      [HttpGet("{id}")] //keep id
       public ActionResult<Keeps> GetKeepsById(int id) //keep id
       {
         try
