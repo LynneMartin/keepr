@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace keepr.Controllers
 {
-  //used Petshop project for reference examples. Contractors project for [Authorize]
+//NOTE used Petshop project for reference examples. Contractors project for [Authorize]
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
@@ -20,8 +20,8 @@ namespace keepr.Controllers
       _repository = repository;
     }
 
-    //used Petshop and BurgerShack for reference examples
-    //NOTE GET ALL PUBLIC KEEPS
+//NOTE used Petshop and BurgerShack for reference examples
+//SECTION GET ALL PUBLIC KEEPS
     [HttpGet]
     public ActionResult<IEnumerable<Keeps>> Get()
     {
@@ -35,8 +35,8 @@ namespace keepr.Controllers
       }
 
     }
-    //NOTE GET KEEPS BY *USER* ID
-    //NOTE GetKeepsByUserId method created in KeepsRepo
+//SECTION GET KEEPS BY *USER* ID
+//NOTE GetKeepsByUserId method created in KeepsRepo
     [HttpGet("{userId}")]
     public ActionResult<IEnumerable<Keeps>> GetKeepsByUserId(string userId) //REVIEW Adding IEnumerable to ActionResult removed "an explicit conversion exists" error
     {
@@ -52,7 +52,7 @@ namespace keepr.Controllers
       }
   
 
-      //NOTE GET A KEEP BY KEEP ID
+//SECTION GET A KEEP BY KEEP ID
       [HttpGet("{id}")] //keep id
       public ActionResult<Keeps> GetKeepsById(int id) //keep id
       {
@@ -66,7 +66,7 @@ namespace keepr.Controllers
         }
       }
 
-    //NOTE CREATE KEEPS/PINS (POST)
+//SECTION CREATE KEEPS/PINS (POST)
     [HttpPost]
     public ActionResult<Keeps> CreateKeeps([FromBody] Keeps keeps)
     {
@@ -80,7 +80,7 @@ namespace keepr.Controllers
       }
     }
 
-    //NOTE DELETE KEEPS/PINS
+//SECTION DELETE KEEPS/PINS
     [HttpDelete("{id")] //keep id
     public ActionResult<string> DeleteKeeps(int id) //keep id
     {
@@ -94,7 +94,5 @@ namespace keepr.Controllers
         return BadRequest(e.Message);
       }
     }
-
-
-    }
+  }
 }
