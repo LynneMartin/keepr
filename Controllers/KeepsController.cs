@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using keepr.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace keepr.Controllers
 {
-  //used Petshop project for reference examples
+  //used Petshop project for reference examples. Contractors project for [Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class KeepsController : ControllerBase
