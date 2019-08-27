@@ -11,8 +11,8 @@ namespace keepr.Controllers
   [ApiController]
   public class VaultController : ControllerBase
   {
-    private readonly VaultRepository repository;
-    public VaultController(VaultRepository _repository)
+    private readonly VaultRepository _repository;
+    public VaultController(VaultRepository repository)
     {
       _repository = repository;
     }

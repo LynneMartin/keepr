@@ -12,9 +12,9 @@ namespace keepr.Controllers
   [ApiController]
   public class KeepsController : ControllerBase
   {
-    private readonly KeepsRepository repository; //NOTE removed squigglies under 'repository' on line 19.
+    private readonly KeepsRepository _repository; //NOTE removed squigglies under 'repository' on line 19.
 
-    public KeepsController(KeepsRepository _repository)
+    public KeepsController(KeepsRepository repository)
     {
       _repository = repository;
     }
