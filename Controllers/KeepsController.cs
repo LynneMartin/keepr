@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using keepr.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+// using keepr.Repositories
 
 namespace keepr.Controllers
 {
@@ -12,15 +14,14 @@ namespace keepr.Controllers
   [ApiController]
   public class KeepsController : ControllerBase
   {
-    private readonly KeepsRepository _repository; //NOTE removed squigglies under 'repository' on line 19.
-
+    private readonly KeepsRepository _repository;
     public KeepsController(KeepsRepository repository)
     {
       _repository = repository;
     }
 
     //used Petshop and BurgerShack for reference examples
-    //STUB would GET ALL KEEPS even be needed? Return to this.
+    //NOTE GET ALL PUBLIC KEEPS
     [HttpGet]
     public ActionResult<IEnumerable<Keeps>> Get()
     {
@@ -34,27 +35,43 @@ namespace keepr.Controllers
       }
 
     }
-      //NOTE GET KEEPS BY ID
-      [HttpGet("{id}")]
-      public ActionResult<Keeps> Get(int id)
+    //NOTE GET KEEPS BY *USER* ID
+    //NOTE GetKeepsByUserId method created in KeepsRepo
+    [HttpGet("{userId}")]
+    public IEnumerable<Keeps> GetKeepsByUserId(string userId) //REVIEW IEnumerable or ActionResult??? string or int?
+    {
+        try
+        {
+        var UserId = HttpContext.User.FindFirstValue("Id");
+        return Ok(_repository.GetKeepsByUserId(UserId));
+        }
+        catch (Exception e)
+        {
+        return BadRequest(e.Message);
+        }
+      }
+  
+
+  //NOTE GET A KEEP BY KEEP ID
+  [HttpGet("{id}")] //keep id
+      public ActionResult<Keeps> GetKeepsById(int id) //keep id
       {
         try
         {
-        return Ok(_repository.GetKeepsById(id));
-      }
-      catch (Exception e)
-      {
+        return Ok(_repository.GetKeepsById(id)); //keep id
+        }
+        catch (Exception e)
+        {
         return BadRequest(e.Message);
-      }
+        }
       }
 
-    //NOTE CREATE KEEPS/PINS
+    //NOTE CREATE KEEPS/PINS (POST)
     [HttpPost]
-    public ActionResult<Keeps> Post([FromBody] Keeps keeps)
+    public ActionResult<Keeps> CreateKeeps([FromBody] Keeps keeps)
     {
       try
       {
-        // var keeps = _repository.CreateKeeps(keeps);
         return Ok(_repository.CreateKeeps(keeps));
       }
       catch (Exception e)
@@ -64,12 +81,12 @@ namespace keepr.Controllers
     }
 
     //NOTE DELETE KEEPS/PINS
-    [HttpDelete("{id")]
-    public ActionResult<string> Delete(int id)
+    [HttpDelete("{id")] //keep id
+    public ActionResult<string> DeleteKeeps(int id) //keep id
     {
       try
       {
-        _repository.DeleteKeeps(id);
+        _repository.DeleteKeeps(id); //keep id
         return Ok("Keep Delorted");
       }
       catch (Exception e)

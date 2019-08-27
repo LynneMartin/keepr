@@ -1,10 +1,12 @@
 //STUB Do I need a GET KEEPS BY USER ID if I already have a GET KEEPS BY ID?
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using keepr.Models;
+// using keepr.Controllers
 
 namespace keepr.Controllers
 //NOTE Referenced lego and petshop projects
@@ -21,12 +23,7 @@ namespace keepr.Controllers
       {
         return _db.Query<Keeps>("SELECT * FROM keeps");
       }
-  //STUB come back to this
-  //SECTION GET KEEPS BY *USER* ID 
-      // public IEnumerable<Keeps> GetKeepsByUserId(string userId)
-      // {
-      // return _db.QueryFirstOrDefault<Keeps>("SELECT * FROM keeps WHERE id = @id, new {id}");
-      // }
+
   //SECTION GET KEEPS BY ID
       public Keeps GetKeepsById(int id) //REVIEW Get All Public Keeps By Id?
       {
@@ -43,9 +40,15 @@ namespace keepr.Controllers
         keeps.Id = id;
         return keeps;
       }
-  //SECTION DELETE KEEPS/PINS BY THE ID
-  //NOTE Referenced lego and petshop projects
-      public void DeleteKeeps(int id) //REVIEW internal void or public or public bool?
+    //SECTION GET KEEPS BY *USER* ID
+    public IEnumerable GetKeepsByUserId(string UserId) //REVIEW string or int?
+    {
+      return _db.Query<Keeps>("SELECT * FROM keeps WHERE UserId = @UserId, new {UserId}");
+    }
+
+    //SECTION DELETE KEEPS/PINS BY THE ID
+    //NOTE Referenced lego and petshop projects
+    public void DeleteKeeps(int id) //REVIEW internal void or public or public bool?
       {
         var success = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
         if (success != 1)
