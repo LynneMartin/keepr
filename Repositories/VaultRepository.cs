@@ -11,6 +11,7 @@ namespace keepr.Repositories
   public class VaultRepository
 {
     private readonly IDbConnection _db;
+
     public VaultRepository(IDbConnection db)
     {
       _db = db;
@@ -40,8 +41,8 @@ namespace keepr.Repositories
 //NOTE Referenced lego and petshop projects
     public void DeleteVault(int id) //STUB internal void or public?
     {
-      var complete = _db.Execute("DELETE FROM vaults WHERE id = @id", new { id });
-      if (success != 1) //FIXME
+      var success = _db.Execute("DELETE FROM vaults WHERE id = @id", new { id });
+      if (success != 1)
       {
         throw new Exception("Unable to delete.");
       }

@@ -47,8 +47,8 @@ namespace keepr.Controllers
   //NOTE Referenced lego and petshop projects
       public void DeleteKeeps(int id) //REVIEW internal void or public or public bool?
       {
-        var complete = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
-        if (success != 1) //FIXME
+        var success = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
+        if (success != 1)
         {
           throw new Exception("Unable to delete.");
         }
