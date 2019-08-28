@@ -1,5 +1,3 @@
-//STUB Do I need a GET KEEPS BY USER ID if I already have a GET KEEPS BY ID?
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,31 +17,31 @@ namespace keepr.Controllers
         _db = db;
       }
 //SECTION GET ALL PUBLIC KEEPS (No login necessary)
-      public IEnumerable<Keeps> GetKeeps()
+      public IEnumerable<Keep> GetKeeps()
       {
-        return _db.Query<Keeps>("SELECT * FROM keeps");
+        return _db.Query<Keep>("SELECT * FROM keeps");
       }
 
 //SECTION GET KEEPS BY ID
-      public Keeps GetKeepsById(int id) //REVIEW Get All Public Keeps By Id?
+      public Keep GetKeepsById(int id) //REVIEW Get All Public Keeps By Id?
       {
-        return _db.QueryFirstOrDefault<Keeps>("SELECT * FROM keeps WHERE id = @id, new {id}");
+        return _db.QueryFirstOrDefault<Keep>("SELECT * FROM keeps WHERE id = @id, new {id}");
       }
 //SECTION GET KEEPS BY *USER* ID
     public IEnumerable GetKeepsByUserId(string UserId) //string, matching Keeps.cs
     {
-      return _db.Query<Keeps>("SELECT * FROM keeps WHERE UserId = @UserId, new {UserId}");
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE UserId = @UserId, new {UserId}");
     }
 //SECTION CREATE KEEPS (POST)
-      public Keeps CreateKeeps(Keeps keeps)
+      public Keep CreateKeep(Keep keep)
       {
         var id = _db.ExecuteScalar<int>(@" 
       INSERT INTO keeps (name, img, description)
       VALUES (@Name, @Img, @Description);
       SELECT LAST_INSERT_ID();
-      ", keeps);
-        keeps.Id = id;
-        return keeps;
+      ", keep);
+        keep.Id = id;
+        return keep;
       }
 
 //SECTION DELETE KEEPS/PINS BY THE ID
