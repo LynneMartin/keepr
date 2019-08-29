@@ -10,6 +10,9 @@
 <script>
 export default {
   name: "home",
+  mounted() {
+    this.$store.dispatch('getPublicKeeps')
+  },
   computed: {
     user() {
       return this.$store.state.user;
@@ -19,6 +22,9 @@ export default {
     logout() {
       this.$store.dispatch("logout");
     }
+  },
+  components: {
+    publicKeeps
   }
 };
 </script>

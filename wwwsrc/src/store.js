@@ -55,6 +55,15 @@ export default new Vuex.Store({
       } catch (e) {
         console.warn(e.message)
       }
-    }
+    },
+    //NOTE per visualization requirements. Referenced Vue-Hackathon.
+    async getPublicKeeps({ commit, dispatch }) {
+      try {
+        let res = await api.get('keeps/')
+        commit('setPublicKeeps', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
   }
 })
