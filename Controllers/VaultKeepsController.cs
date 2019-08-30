@@ -13,22 +13,22 @@ namespace keepr.Controllers
 
   public class VaultKeepsController : ControllerBase
   {
-    private readonly VaultKeepsController _repository;
+    private readonly VaultKeepsRepository _repository;
     public VaultKeepsController(VaultKeepsRepository repository)
     {
-      _repository = repository; //FIXME whyyyyy???
+      _repository = repository;
     }
 
 //SECTION GET VAULTKEEPS BY ID
 //NOTE GET api/vaultkeeps/5
     [HttpGet("{id}")]
-    public ActionResult<string> GetVaultKeepsById(int id)
+    public ActionResult<VaultKeeps> GetVaultKeepsById(int id)
     {
       try
       {
-        return Ok(_repository.GetVaultKeepsById(id));
+        return Ok(_repository.GetVaultKeepsById(id)); //vaultkeep id
       }
-      catch (Exception e)
+        catch (Exception e)
       {
         return BadRequest(e.Message);
       }
@@ -39,15 +39,15 @@ namespace keepr.Controllers
       [HttpPost]
       public ActionResult<VaultKeeps> AddKeepToVault([FromBody] VaultKeeps vaultKeeps)
       {
-      vaultKeeps.UserId = HttpContext.User.FindFirstValue("Id"); //FIXME ???
       try 
-      {
+        {
+        vaultKeeps.UserId = HttpContext.User.FindFirstValue("Id"); //fixed in model
         return Ok(_repository.AddKeepToVault(vaultKeeps));
-      }
+        }
         catch (Exception e)
         {
         return BadRequest("Unable to add this Keep to this Vault.");
-      }
+        }
     }
 
 //SECTION REMOVE KEEP FROM VAULT

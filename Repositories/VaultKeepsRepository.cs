@@ -14,13 +14,13 @@ namespace keepr.Repositories
       _db = db;
     }
 //NOTE SQL referenced from TABLES in db-setup
-//NOTE GET ALL VAULTKEEPS (BY ID, BECAUSE A USER HAS TO BE LOGGED IN TO SEE VAULTS)
-    public IEnumerable<VaultKeeps> GetVaultKeepsById(string userId)
+//SECTION GET ALL VAULTKEEPS (BY ID, BECAUSE A USER HAS TO BE LOGGED IN TO SEE VAULTS)
+    public IEnumerable<VaultKeeps> GetVaultKeepsById(int userId)
     {
       return _db.Query<VaultKeeps>("SELECT * FROM vaultKeeps WHERE userId = @userId", new { userId });
     }
 
-    //NOTE ADD KEEPS TO VAULTKEEP (with an ID)
+//SECTION ADD KEEPS TO VAULTKEEP (with an ID)
 
     public VaultKeeps AddKeepToVault(VaultKeeps vaultKeeps)
     {
@@ -32,9 +32,9 @@ namespace keepr.Repositories
       return vaultKeeps;
     }
 
-//NOTE REMOVE KEEPS FROM VAULTS
+//SECTION REMOVE KEEPS FROM VAULTS
 //NOTE referenced petshop for delete. needs review
-    public void RemoveKeepsFromVaults(int id) //REVIEW VaultKeeps vaultKeeps?
+    public void RemoveKeepFromVault(int id) //REVIEW VaultKeeps vaultKeeps?
     {
       var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId", new {id}); // vaultKeeps?
       if (success != 1) //REVIEW == 0?
