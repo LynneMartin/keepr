@@ -192,7 +192,7 @@ export default new Vuex.Store({
     
 //NOTE GET ALL VAULT KEEPS (BY ID)
     
-    async getVaultKeeps({ commit, dispatch }, payload) {
+    async getVaultKeepsById({ commit, dispatch }, payload) {
       try {
         let res = await api.get('vaultKeeps/' + payload)
         commit("setVaultKeeps", res.data)
@@ -221,7 +221,7 @@ export default new Vuex.Store({
     },
 
 //NOTE DELETE
-    async removeKeepFromVault({ commit, dispatch }, payload) {
+    async removeKeepsFromVaults({ commit, dispatch }, payload) {
       try {
         await api.put("vaultKeeps", payload) //must be logged in to delete/remove
         dispatch("getKeepsByUserId")
