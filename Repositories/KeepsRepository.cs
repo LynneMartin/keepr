@@ -33,11 +33,12 @@ namespace keepr.Controllers
       return _db.Query<Keep>("SELECT * FROM keeps WHERE UserId = @UserId, new {UserId}");
     }
 //SECTION CREATE KEEPS (POST)
+//NOTE Referenced burger shack
       public Keep CreateKeep(Keep keep)
       {
         var id = _db.ExecuteScalar<int>(@" 
-      INSERT INTO keeps (name, img, description)
-      VALUES (@Name, @Img, @Description);
+      INSERT INTO keeps (id, name, description, userId, img, isPrivate)
+      VALUES (@Id, @Name, @Description, @userId, @Img, @isPrivate);
       SELECT LAST_INSERT_ID();
       ", keep);
         keep.Id = id;
@@ -48,7 +49,7 @@ namespace keepr.Controllers
 //NOTE Referenced lego and petshop projects
     public void DeleteKeeps(int id) //REVIEW internal void or public or public bool?
       {
-        var success = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
+        var success = _db.Execute("DELETE FROM keeps WHERE id = @id AND userId = @userId", new { id });
         if (success != 1)
         {
           throw new Exception("Unable to delete.");

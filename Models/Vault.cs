@@ -4,7 +4,10 @@ namespace keepr.Models
   {
     public int Id { get; set; }
     public string Name { get; set; }
-    // public string Img { get; set; } //REVIEW is this used in vaults?
+
     public string Description { get; set; }
+
+    public string UserId { get; set; }
+
   }
 }

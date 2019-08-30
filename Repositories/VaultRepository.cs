@@ -47,7 +47,7 @@ namespace keepr.Repositories
 //NOTE Referenced lego and petshop projects
     public void DeleteVault(int id) //STUB internal void or public?
     {
-      var success = _db.Execute("DELETE FROM vaults WHERE id = @id", new { id });
+      var success = _db.Execute("DELETE FROM vaults WHERE id = @id AND userId = @userId", new { id });
       if (success != 1)
       {
         throw new Exception("Unable to delete.");

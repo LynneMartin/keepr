@@ -36,8 +36,8 @@ namespace keepr.Repositories
 //NOTE referenced petshop for delete. needs review
     public void RemoveKeepsFromVaults(int id) //REVIEW VaultKeeps vaultKeeps?
     {
-      var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @vaultId AND keepId = @keepId", new {id}); // vaultKeeps?
-      if (success == 0)
+      var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId", new {id}); // vaultKeeps?
+      if (success != 1) //REVIEW == 0?
       {
         throw new Exception("Delete Request Failed.")
       }
