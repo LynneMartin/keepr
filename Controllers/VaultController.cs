@@ -10,7 +10,7 @@ namespace keepr.Controllers
 //NOTE Used KeepsController for reference
 {
   [Authorize]
-[Route("api/[controller]")]
+  [Route("api/[controller]")]
   [ApiController]
   public class VaultController : ControllerBase
   {
