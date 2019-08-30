@@ -190,9 +190,9 @@ export default new Vuex.Store({
 
 //SECTION ==================== VAULT KEEPS ========================
     
-//NOTE GET ALL VAULT KEEPS (BY ID)
+//NOTE GET KEEPS BY VAULT ID
     
-    async getVaultKeepsById({ commit, dispatch }, payload) {
+    async getKeepsByVaultId({ commit, dispatch }, payload) {
       try {
         let res = await api.get('vaultKeeps/' + payload)
         commit("setVaultKeeps", res.data)
@@ -201,16 +201,7 @@ export default new Vuex.Store({
       }
     },
     
-    // TODO dispatch getKeepsByVaultId?
-    // async getVaultKeeps({ commit, dispatch }, payload) {
-    //   try {
-    //     let res = await api.get('vaultkeeps')
-    //     commit("setVaultKeeps", res.data)
-    //     dispatch("get.....) 
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // },
+
 //NOTE POST
     async addKeepToVault({ commit, dispatch }, payload) {
       try {

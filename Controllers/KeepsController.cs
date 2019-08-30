@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace keepr.Controllers
 {
-//NOTE used Petshop project for reference examples. Contractors project for [Authorize]
+  //NOTE used Petshop project for reference examples. Contractors project for [Authorize]
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
@@ -20,82 +20,100 @@ namespace keepr.Controllers
       _repository = repository;
     }
 
-//NOTE used Petshop and BurgerShack for reference examples
-//SECTION GET ALL PUBLIC KEEPS
+    //NOTE used Petshop and BurgerShack for reference examples
+    //SECTION GET ALL PUBLIC KEEPS
     [HttpGet]
     public ActionResult<IEnumerable<Keep>> Get() //key is from the Model
     {
       try
       {
-      return Ok(_repository.GetPublicKeeps()); //referencing KeepsRepo
+        return Ok(_repository.GetPublicKeeps()); //referencing KeepsRepo
       }
       catch (Exception e)
       {
-      return BadRequest(e.Message);
+        return BadRequest(e.Message);
       }
 
     }
-//SECTION GET KEEPS BY *USER* ID
-//NOTE GetKeepsByUserId method created in KeepsRepo
+    //SECTION GET KEEPS BY *USER* ID
+    //NOTE GetKeepsByUserId method created in KeepsRepo
     [HttpGet("user")]
     public ActionResult<IEnumerable<Keep>> GetKeepsByUserId() //REVIEW Adding IEnumerable to ActionResult removed "an explicit conversion exists" error
     {
-        try
-        {
+      try
+      {
         string userId = HttpContext.User.FindFirstValue("Id"); //stackoverflow
         return Ok(_repository.GetKeepsByUserId(userId));
-        }
-        catch (Exception e)
-        {
-        return BadRequest(e.Message);
-        }
       }
-  
-
-//SECTION GET A KEEP BY KEEP ID
-      [HttpGet("{id}")] //keep id
-      public ActionResult<Keep> GetKeepsById(int id) //keep id
+      catch (Exception e)
       {
-        try
-        {
-        return Ok(_repository.GetKeepsById(id)); //keep id
-        }
-        catch (Exception e)
-        {
         return BadRequest(e.Message);
-        }
       }
+    }
 
-//SECTION CREATE KEEPS/PINS (POST)
-// POST api/values
-//NOTE referenced popsicle burger shack project & checking out backapack video
+
+    //SECTION GET A KEEP BY KEEP ID
+    [HttpGet("{id}")] //keep id
+    public ActionResult<Keep> GetKeepsById(int id) //keep id
+    {
+      try
+      {
+        return Ok(_repository.GetKeepsById(id)); //keep id
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    //SECTION CREATE KEEPS/PINS (POST)
+    // POST api/values
+    //NOTE referenced popsicle burger shack project & checking out backapack video
     [HttpPost]
     public ActionResult<Keep> CreateKeep([FromBody] Keep keep)
     {
-        try
-        {
+      try
+      {
         keep.UserId = HttpContext.User.FindFirstValue("Id");
         return Ok(_repository.CreateKeep(keep));
-        }
-        catch (Exception e)
-        {
+      }
+      catch (Exception e)
+      {
         return BadRequest(e.Message);
-        }
+      }
     }
 
-//SECTION DELETE KEEPS/PINS
-    [HttpDelete("{id")] //keep id
+
+    //FIXME PUT to edit KEEP dont forget to attach the userId
+    // [HttpPut]
+    // public ActionResult<Keep> EditKeep([FromBody] Keep keep)
+    // {
+    //   try
+    //   {
+    //     keep.UserId = HttpContext.User.FindFirstValue("Id");
+    //     return Ok(_repository.EditKeep(keep));
+    //   }
+    //   catch (Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
+
+    //SECTION DELETE KEEPS/PINS
+    [HttpDelete("{id}")] //keep id
     public ActionResult<string> DeleteKeeps(int id) //keep id
     {
-        try
-        {
+      try
+      {
+        //REVIEW is this correct?
+        string userId = HttpContext.User.FindFirstValue("Id");
         _repository.DeleteKeeps(id); //keep id
         return Ok("Keep Was Delorted");
-        }
-        catch (Exception e)
-        {
+      }
+      catch (Exception e)
+      {
         return BadRequest(e.Message);
-        }
+      }
     }
   }
 }

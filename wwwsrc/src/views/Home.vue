@@ -2,13 +2,12 @@
   <div class="home container-fluid">
     <div class="row justify-content-center">
       <div class="col-md-12">
-        <h1>Welcome To Keepr, {{user.username}}</h1>
+        <h1>Welcome To Keepr {{user.username}}</h1>
         <!--NOTE If logged in, show logout button. If not logged in, show login button-->
-        <!--TODO Make a new row/column for login/logout button-->
         <button v-if="user.id" @click="logout">logout</button>
         <router-link v-else :to="{name: 'login'}">Login</router-link>
       </div>
-      <publicKeeps></publicKeeps>
+      <!-- <publicKeeps></publicKeeps> -->
     </div>
   </div>
 </template>

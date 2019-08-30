@@ -13,14 +13,18 @@ namespace keepr.Repositories
     {
       _db = db;
     }
-//NOTE SQL referenced from TABLES in db-setup
-//SECTION GET ALL VAULTKEEPS (BY ID, BECAUSE A USER HAS TO BE LOGGED IN TO SEE VAULTS)
-    public IEnumerable<VaultKeeps> GetVaultKeepsById(int userId)
+    //NOTE SQL referenced from TABLES in db-setup
+    //SECTION GET ALL VAULTKEEPS (BY ID, BECAUSE A USER HAS TO BE LOGGED IN TO SEE VAULTS)
+    public IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
     {
-      return _db.Query<VaultKeeps>("SELECT * FROM vaultKeeps WHERE userId = @userId", new { userId });
+      return _db.Query<Keep>(@"
+      SELECT * FROM vaultkeeps vk
+      INNER JOIN keeps k ON k.id = vk.keepId
+      WHERE(vaultId = @vaultId AND vk.userId = @userId)
+      ", new { vaultId, userId });
     }
 
-//SECTION ADD KEEPS TO VAULTKEEP (with an ID)
+    //SECTION ADD KEEPS TO VAULTKEEP (with an ID)
 
     public VaultKeeps AddKeepToVault(VaultKeeps vaultKeeps)
     {
@@ -32,12 +36,12 @@ namespace keepr.Repositories
       return vaultKeeps;
     }
 
-//SECTION REMOVE KEEPS FROM VAULTS
-//NOTE referenced petshop for delete. needs review
-    public void RemoveKeepFromVault(int id) //REVIEW VaultKeeps vaultKeeps?
+    //SECTION REMOVE KEEPS FROM VAULTS
+    //NOTE referenced petshop for delete. needs review
+    public void RemoveKeepFromVault(VaultKeeps vk)
     {
-      var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId", new {id}); // vaultKeeps?
-      if (success != 1) //REVIEW == 0?
+      var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @VaultId AND keepId = @KeepId AND userId = @UserId", vk); 
+      if (success != 1)
       {
         throw new Exception("Delete Request Failed.");
       };

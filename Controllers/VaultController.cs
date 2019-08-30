@@ -12,10 +12,10 @@ namespace keepr.Controllers
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
-  public class VaultController : ControllerBase
+  public class VaultsController : ControllerBase
   {
-    private readonly VaultRepository _repository;
-    public VaultController(VaultRepository repository)
+    private readonly VaultsRepository _repository;
+    public VaultsController(VaultsRepository repository)
     {
       _repository = repository;
     }
@@ -35,21 +35,23 @@ namespace keepr.Controllers
     //   }
 
     // }
-//SECTION GET VAULT BY ID
+    //SECTION GET VAULT BY ID
     [HttpGet("{id}")]
-    public ActionResult<string> GetVaultById(int id)
+    public ActionResult<Vault> GetVaultById(int id, string userId)
     {
       try
       {
-        return Ok(_repository.GetVaultById(id));
+        // string userId = HttpContext.User.FindFirstValue("Id"); //stacko //FIXME CANNOT READ PROPERTY 'ID' OF UNDEFINED
+        return Ok(_repository.GetVaultById(id, userId));
       }
-      catch (Exception e)
+        catch (Exception e)
       {
         return BadRequest(e.Message);
       }
     }
 
-//SECTION GET VAULT BY *USER* ID
+    //SECTION GET VAULT BY *USER* ID
+    [HttpGet]
     public ActionResult<IEnumerable<Vault>> GetVaultByUserId()
     {
       try
@@ -57,36 +59,40 @@ namespace keepr.Controllers
         string userId = HttpContext.User.FindFirstValue("Id"); //stackoverflow
         return Ok(_repository.GetVaultByUserId(userId));
       }
-      catch (Exception e)
+        catch (Exception e)
       {
         return BadRequest(e.Message);
       }
     }
 
-//SECTION CREATE VAULT (POST)
+    //SECTION CREATE VAULT (POST)
     [HttpPost]
     public ActionResult<Vault> Post([FromBody] Vault vault)
     {
       try
       {
+        //FIXME ATTACH THE USER ID // DONE
+        vault.UserId = HttpContext.User.FindFirstValue("Id");
         return Ok(_repository.CreateVault(vault));
       }
-      catch (Exception e)
+        catch (Exception e)
       {
         return BadRequest(e.Message);
       }
     }
 
-//SECTION DELETE VAULT (by Id)
+    //SECTION DELETE VAULT (by Id)
     [HttpDelete("{id}")]
-    public ActionResult<Vault> Delete(int id)
+    public ActionResult<Vault> Delete(Vault vault, int id, string userId) //REVIEW is this correct?
     {
       try
       {
-        _repository.DeleteVault(id);
+        //FIXME
+        vault.UserId = HttpContext.User.FindFirstValue("Id"); 
+        _repository.DeleteVault(id, userId);
         return Ok("Vault Delorted");
       }
-      catch (Exception e)
+        catch (Exception e)
       {
         return BadRequest(e.Message);
       }
