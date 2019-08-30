@@ -39,12 +39,8 @@ namespace keepr.Repositories
       var success = _db.Execute("DELETE FROM vaultKeeps WHERE vaultId = @vaultId AND keepId = @keepId AND userId = @userId", new {id}); // vaultKeeps?
       if (success != 1) //REVIEW == 0?
       {
-        throw new Exception("Delete Request Failed.")
-      }
+        throw new Exception("Delete Request Failed.");
+      };
     }
-
-
-
-
   }
 }
