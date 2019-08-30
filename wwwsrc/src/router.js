@@ -5,6 +5,10 @@ import Home from './views/Home.vue'
 // @ts-ignore
 import Login from './views/Login.vue'
 
+// import Dashboard from './views/Vault.vue'
+
+// import 
+
 Vue.use(Router)
 
 export default new Router({
