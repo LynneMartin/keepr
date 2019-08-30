@@ -16,15 +16,21 @@ namespace keepr.Repositories
     {
       _db = db;
     }
-//SECTION GET ALL VAULTS
-    public IEnumerable<Vault> GetVault() //STUB vault or vaults?
-    {
-      return _db.Query<Vault>("SELECT * FROM vault");
-    }
+// //SECTION GET ALL VAULTS
+//     public IEnumerable<Vault> GetVaults() 
+//     {
+//       return _db.Query<Vault>("SELECT * FROM vault");
+//     }
+
 //SECTION GET VAULT BY ID
     public Vault GetVaultById(int id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vault WHERE id = @id, new {id}");
+    }
+//SECTION GET VAULT BY USER ID
+    public IEnumerable<Vault> GetVaultByUserId(string userId)
+    {
+      return _db.Query<Vault>("SELECT * FROM vault WHERE userId = @userId", new { userId });
     }
 //SECTION CREATE VAULT (POST)
     public Vault CreateVault(Vault vault)

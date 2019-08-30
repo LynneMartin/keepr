@@ -27,7 +27,7 @@ namespace keepr.Controllers
     {
       try
       {
-      return Ok(_repository.GetKeeps());
+      return Ok(_repository.GetPublicKeeps()); //referencing KeepsRepo
       }
       catch (Exception e)
       {

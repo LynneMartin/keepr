@@ -17,7 +17,7 @@ namespace keepr.Controllers
         _db = db;
       }
 //SECTION GET ALL PUBLIC KEEPS (No login necessary)
-      public IEnumerable<Keep> GetKeeps()
+      public IEnumerable<Keep> GetPublicKeeps()
       {
         return _db.Query<Keep>("SELECT * FROM keeps");
       }

@@ -11,7 +11,7 @@
 export default {
   name: "home",
   mounted() {
-    this.$store.dispatch('getPublicKeeps')
+    this.$store.dispatch('getPublicKeepsComponent')
   },
   computed: {
     user() {
@@ -24,7 +24,7 @@ export default {
     }
   },
   components: {
-    publicKeeps
+    publicKeepsComponent
   }
 };
 </script>
