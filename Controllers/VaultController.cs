@@ -78,7 +78,7 @@ namespace keepr.Controllers
     }
 
 //SECTION DELETE VAULT (by Id)
-    [HttpDelete("{id")]
+    [HttpDelete("{id}")]
     public ActionResult<Vault> Delete(int id)
     {
       try
